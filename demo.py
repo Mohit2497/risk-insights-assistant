@@ -2222,7 +2222,7 @@ This focused approach is essential to provide the most relevant assistance."""
                 messages.append({"role": "user", "content": enhanced_prompt})
                 
                 # Prepare the API request
-                api_key = st.secrets.get("openai", {}).get("api_key", "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")
+                api_key = st.secrets.get("openai", {}).get("api_key", "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")
                 
                 payload = {
                     "model": "gpt-3.5-turbo",
