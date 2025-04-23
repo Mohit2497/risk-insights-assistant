@@ -75,11 +75,13 @@ def init_connections():
     """Initialize and cache connections to Azure Cosmos DB and Blob Storage"""
     try:
         # Specific credentials from the integration document
-        cosmos_endpoint = "https://cogorisk-insights-db.documents.azure.com:443/"
-        cosmos_key = "aeJzT920sDjuQx1TU3UdlOhiCIgvjBEhNmp6HeVIW7FEvuZQdmM2UEmz4nglZJC9f9v0Hsk60437ACDbG50Keg=="
+        cosmos_endpoint = st.secrets.get("azure", {}).get("cosmos_endpoint", 
+                          "https://cogorisk-insights-db.documents.azure.com:443/")
+        cosmos_key = st.secrets.get("azure", {}).get("cosmos_key",
+                     "aeJzT920sDjuQx1TU3UdlOhiCIgvjBEhNmp6HeVIW7FEvuZQdmM2UEmz4nglZJC9f9v0Hsk60437ACDbG50Keg==")
         
         # Storage connection string for cogosensordata
-        storage_connection_string = "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=cogosensordata;AccountKey=K0SlE8vHLBdGZq0GUHFXBDAjBUkSJrCRguMp5OK22N0eKA7YUyP0uv03IjQJOvmafTzdM4cYj6Mc+AStZ6XnFw=="
+        storage_connection_string = st.secrets.get("azure", {}).get("storage_connection_string","DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=cogosensordata;AccountKey=K0SlE8vHLBdGZq0GUHFXBDAjBUkSJrCRguMp5OK22N0eKA7YUyP0uv03IjQJOvmafTzdM4cYj6Mc+AStZ6XnFw==")
         
         # Connect to Cosmos DB
         cosmos_client = CosmosClient(
@@ -2220,7 +2222,7 @@ This focused approach is essential to provide the most relevant assistance."""
                 messages.append({"role": "user", "content": enhanced_prompt})
                 
                 # Prepare the API request
-                api_key = "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"
+                api_key = st.secrets.get("openai", {}).get("api_key", "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")
                 
                 payload = {
                     "model": "gpt-3.5-turbo",
