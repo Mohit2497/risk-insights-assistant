@@ -1,4 +1,6 @@
 import streamlit as st
+import dotenv
+dotenv.load_dotenv()
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -75,11 +77,11 @@ def init_connections():
     """Initialize and cache connections to Azure Cosmos DB and Blob Storage"""
     try:
         # Specific credentials from the integration document
-        cosmos_endpoint = cosmos_endpoint = "https://cogorisk-insights-db.documents.azure.com:443/"
-        cosmos_key = "aeJzT920sDjuQx1TU3UdlOhiCIgvjBEhNmp6HeVIW7FEvuZQdmM2UEmz4nglZJC9f9v0Hsk60437ACDbG50Keg=="
+        cosmos_endpoint = os.getenv("COSMOS_ENDPOINT")
+        cosmos_key = os.getenv("COSMOS_KEY")
         
         # Storage connection string for cogosensordata
-        storage_connection_string = "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=cogosensordata;AccountKey=K0SlE8vHLBdGZq0GUHFXBDAjBUkSJrCRguMp5OK22N0eKA7YUyP0uv03IjQJOvmafTzdM4cYj6Mc+AStZ6XnFw=="
+        storage_connection_string = os.getenv("STORAGE_CONNECTION_STRING")
         
         # Connect to Cosmos DB
         cosmos_client = CosmosClient(
@@ -2220,7 +2222,7 @@ This focused approach is essential to provide the most relevant assistance."""
                 messages.append({"role": "user", "content": enhanced_prompt})
                 
                 # Prepare the API request
-                api_key = "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"
+                api_key = os.getenv("OPENAI_API_KEY")
                 
                 payload = {
                     "model": "gpt-3.5-turbo",
